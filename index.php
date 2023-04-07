@@ -41,12 +41,12 @@
     ];
 
     $park_check = $_GET['park-filter'] ?? 'off';
-    
+
     //Controlla se un filtro è stato applicato e restituisce un nuovo array
-    if($park_check === 'on'){    
+    if($park_check === 'on'){
         $hotels = array_filter($hotels, function($v, $k) {
             return $k == $k && $v == $v['parking'];
-        }, ARRAY_FILTER_USE_BOTH); 
+        }, ARRAY_FILTER_USE_BOTH);
     };
 ?>
 <!DOCTYPE html>
@@ -94,23 +94,19 @@
                 <tbody>
                     <!-- Singola riga ciclata-->
                     <?php foreach ($hotels as $key => $hotel): ?>
-                    <tr>                
+                    <tr>
                         <th scope="row"><?php echo $key + 1?></th>
                         <td><?php echo $hotel['name'] ?></td>
                         <td><?php echo $hotel['description'] ?></td>
                         <!-- Controllo disponibilità parcheggio -->
                         <td>
-                            <!-- <div class="form-check"> -->
-                                <?php if($hotel['parking'] === true): ?>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
-                                <?php else: ?>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                <?php endif; ?>
-                            <!-- </div> -->
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" <?php echo $hotel['parking'] ? 'checked' : ''; ?> disabled>
+                            </div>
                         </td>
                         <!-- /Controllo disponibilità parcheggio -->
                         <td><?php echo $hotel['vote'] ?></td>
-                        <td><?php echo $hotel['distance_to_center'] ?></td>                        
+                        <td><?php echo $hotel['distance_to_center'] ?></td>               
                     </tr>
                     <?php endforeach; ?>
                     <!-- /Singola riga ciclata -->
