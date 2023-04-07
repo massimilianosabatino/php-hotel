@@ -40,6 +40,14 @@
 
     ];
 
+    $park_check = $_GET['park-filter'] ?? 'off';
+    
+    //Controlla se un filtro è stato applicato e restituisce un nuovo array
+    if($park_check === 'on'){    
+        $hotels = array_filter($hotels, function($v, $k) {
+            return $k == $k && $v == $v['parking'];
+        }, ARRAY_FILTER_USE_BOTH); 
+    };
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -55,42 +63,60 @@
         <h1>Hotels list</h1>
     </header>
     <main>
-        <table class="table">
-            <thead>
-                <!-- Intestazione -->
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Hotel</th>
-                    <th scope="col">Descrizione</th>
-                    <th scope="col">Parcheggio</th>
-                    <th scope="col">Voto</th>
-                    <th scope="col">Distanza dal centro</th>
-                </tr>
-                <!-- /Intestazione -->
-            </thead>
-            <tbody>
-                <!-- Singola riga -->
-                <!-- Ciclo array -->
-                <?php foreach ($hotels as $key => $hotel): ?>
-                <tr>
-                    <th scope="row"><?php echo $key + 1?></th>
-                    <td><?php echo $hotel['name'] ?></td>
-                    <td><?php echo $hotel['description'] ?></td>
-                    <!-- Controllo disponibilità parcheggio -->
-                    <?php if($hotel['parking'] === true): ?>
-                    <td>Disponibile</td>
-                    <?php else: ?>
-                    <td>Non disponibile</td>
-                    <?php endif; ?>
-                    <!-- /Controllo disponibilità parcheggio -->
-                    <td><?php echo $hotel['vote'] ?></td>
-                    <td><?php echo $hotel['distance_to_center'] ?></td>
-                </tr>
-                <?php endforeach; ?>
-                <!-- /Ciclo array -->
-                <!-- /Singola riga -->
-            </tbody>
-        </table>
+        <section>
+            <div>
+                <!-- Filtri -->
+                <form action="" method="get">
+                    <h2>Filtri di ricerca</h2>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="park" name="park-filter">
+                        <label class="form-check-label" for="park">parcheggio</label>
+                        <button type="submit">filtra</button>
+                    </div>
+                </form>
+                <!-- /Filtri -->
+            </div>
+        </section>
+        <section>
+            <table class="table table-striped">
+                <thead>
+                    <!-- Intestazione -->
+                    <tr class="align-middle">
+                        <th scope="col">#</th>
+                        <th scope="col">Hotel</th>
+                        <th scope="col">Descrizione</th>
+                        <th scope="col">Parcheggio</th>
+                        <th scope="col">Voto</th>
+                        <th scope="col">Distanza dal centro</th>
+                    </tr>
+                    <!-- /Intestazione -->
+                </thead>
+                <tbody>
+                    <!-- Singola riga ciclata-->
+                    <?php foreach ($hotels as $key => $hotel): ?>
+                    <tr>                
+                        <th scope="row"><?php echo $key + 1?></th>
+                        <td><?php echo $hotel['name'] ?></td>
+                        <td><?php echo $hotel['description'] ?></td>
+                        <!-- Controllo disponibilità parcheggio -->
+                        <td>
+                            <!-- <div class="form-check"> -->
+                                <?php if($hotel['parking'] === true): ?>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                <?php else: ?>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                <?php endif; ?>
+                            <!-- </div> -->
+                        </td>
+                        <!-- /Controllo disponibilità parcheggio -->
+                        <td><?php echo $hotel['vote'] ?></td>
+                        <td><?php echo $hotel['distance_to_center'] ?></td>                        
+                    </tr>
+                    <?php endforeach; ?>
+                    <!-- /Singola riga ciclata -->
+                </tbody>
+            </table>
+        </section>
     </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
