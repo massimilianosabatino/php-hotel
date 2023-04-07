@@ -41,3 +41,41 @@
     ];
 
 ?>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotels</title>
+</head>
+<body>
+    <header>
+        <h1>Hotels list</h1>
+    </header>
+    <main>
+        <ul>
+            <!-- Ciclo array -->
+            <?php foreach ($hotels as $hotel): ?>
+            <li>
+                <h2><?php echo $hotel['name'] ?></h2>
+                <p><?php echo $hotel['description'] ?></p>
+                <div>
+                    <!-- Controllo disponibilità parcheggio -->
+                    <span>Parcheggio: </span>
+                    <?php if($hotel['parking'] === true): ?>
+                    <span>Disponibile</span>
+                    <?php else: ?>
+                    <span>Non disponibile</span>
+                    <?php endif; ?>
+                    <!-- /Controllo disponibilità parcheggio -->
+                </div>
+                <div>Voto: <?php echo $hotel['vote'] ?></div>
+                <div>Distanza dal centro: <?php echo $hotel['distance_to_center']?></div>
+            </li>
+            <?php endforeach; ?>
+            <!-- /Ciclo array -->
+        </ul>
+    </main>
+</body>
+</html>
